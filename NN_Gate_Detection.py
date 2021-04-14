@@ -7,14 +7,14 @@ Created on Wed Apr  7 10:06:58 2021
 
 import pandas as pd
 import numpy as np
-import cv2
+import cv2 as cv
 import matplotlib.pyplot as plt
-import tensorflow as tf
+#import tensorflow as tf
 
 ########## Import data ##########
 
 data_folder = 'C:/Users/Sebastien/Documents/Semi BACKUP Laptop 08.01.20/Documents/4. Master/3rd Quarter/Autonomous MAV/Individual assignment/WashingtonOBRace/'
-image_prefix = 'image_'
+image_prefix = 'img_'
 mask_prefix = 'mask_'
 image_type = '.png'
 mask_type = '.png'
@@ -40,6 +40,25 @@ for index, row in corners.iterrows():
 
 
 ##########  ##########
+
+
+img = cv.imread(im_loc)
+img_gray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
+
+sift = cv.SIFT_create()
+kp = sift.detect(img_gray,None) #Finds keypoints in image / Can pass a mask to analyse only part of the image
+# Optional: ,flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS
+img=cv.drawKeypoints(img_gray,kp,img)
+cv.imwrite('sift_keypoints.jpg',img)
+
+plt.figure();
+plt.imshow(img); 
+plt.title('Image' + str(image_nr));
+
+
+
+
+
 
 ##########  ##########
 
